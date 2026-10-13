@@ -1,0 +1,136 @@
+/*
+ * Copyright The Zephyr Project Contributors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Every board-independent driver of the module on fake buses, to build them.
+ */
+
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+#include <zephyr/dt-bindings/input/keymap.h>
+
+/ {
+	test {
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		test_gpio: gpio@deadbeef {
+			compatible = "vnd,gpio";
+			gpio-controller;
+			reg = <0xdeadbeef 0x1000>;
+			#gpio-cells = <2>;
+			status = "okay";
+		};
+
+		test_i2c: i2c@11112222 {
+			compatible = "vnd,i2c";
+			reg = <0x11112222 0x1000>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			clock-frequency = <100000>;
+			status = "okay";
+
+			pmic@48 {
+				compatible = "ti,twl4030";
+				reg = <0x48>;
+
+				keypad {
+					compatible = "ti,twl4030-keypad";
+					row-size = <2>;
+					col-size = <2>;
+
+					keymap {
+						compatible = "input-keymap";
+						row-size = <2>;
+						col-size = <2>;
+						keymap = <MATRIX_KEY(0, 0, INPUT_KEY_A)
+							  MATRIX_KEY(1, 1, INPUT_KEY_B)>;
+					};
+				};
+
+				power-button {
+					compatible = "ti,twl4030-pwrbutton";
+				};
+
+				test_twl_gpio: gpio {
+					compatible = "ti,twl4030-gpio";
+					gpio-controller;
+					#gpio-cells = <2>;
+					ngpios = <18>;
+				};
+
+				vibrator {
+					compatible = "ti,twl4030-vibra";
+				};
+			};
+
+			audio-codec@18 {
+				compatible = "ti,tlv320aic3x";
+				reg = <0x18>;
+				reset-gpios = <&test_gpio 0 0>;
+				hp-out;
+				line-out;
+			};
+
+			accelerometer@1d {
+				compatible = "st,lis302dl";
+				reg = <0x1d>;
+				irq-gpios = <&test_gpio 1 0>, <&test_gpio 2 0>;
+			};
+
+			flash-led@30 {
+				compatible = "adi,adp1653";
+				reg = <0x30>;
+				enable-gpios = <&test_twl_gpio 3 0>;
+				torch-max-microamp = <50000>;
+				flash-max-microamp = <320000>;
+			};
+
+			led-controller@32 {
+				compatible = "national,lp5523";
+				reg = <0x32>;
+				enable-gpios = <&test_gpio 3 0>;
+				current-microamp = <5000>;
+			};
+
+			fuel-gauge@55 {
+				compatible = "ti,bq27200";
+				reg = <0x55>;
+			};
+
+			charger@6b {
+				compatible = "ti,bq24150a";
+				reg = <0x6b>;
+				constant-charge-current-max-microamp = <650000>;
+				constant-charge-voltage-max-microvolt = <4200000>;
+				charge-term-current-microamp = <100000>;
+				ti,sense-resistor-micro-ohms = <68000>;
+			};
+		};
+
+		test_spi: spi@33334444 {
+			compatible = "vnd,spi";
+			reg = <0x33334444 0x1000>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			clock-frequency = <2000000>;
+			cs-gpios = <&test_gpio 4 0>, <&test_gpio 5 0>;
+			status = "okay";
+
+			touchscreen@0 {
+				compatible = "ti,tsc2005";
+				reg = <0>;
+				spi-max-frequency = <6000000>;
+				int-gpios = <&test_gpio 6 0>;
+				screen-width = <800>;
+				screen-height = <480>;
+			};
+
+			panel@1 {
+				compatible = "sony,acx565akm";
+				reg = <1>;
+				spi-max-frequency = <6000000>;
+			};
+		};
+	};
+};

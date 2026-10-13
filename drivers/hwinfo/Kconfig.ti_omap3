@@ -1,0 +1,11 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+config HWINFO_TI_OMAP3
+	bool "TI OMAP3 hwinfo driver"
+	default y
+	depends on SOC_SERIES_OMAP3
+	select HWINFO_HAS_DRIVER
+	help
+	  Enable the TI OMAP3 hwinfo driver: the die ID as device ID and the
+	  reset cause from the power and reset manager.

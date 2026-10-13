@@ -1,0 +1,41 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  TI OMAP3 pad configuration
+
+  Each pad has a 16-bit configuration register in the system control module.
+  Each child node configures one pad with OMAP3_PINMUX(pad, value, mux_mode) from
+  <zephyr/dt-bindings/pinctrl/ti-omap3-pinctrl.h>:
+
+  pad - the address of the pad configuration register, less the system control
+        module base (0x48002000), as listed in the TRM; for example 0x21c8 for
+        mcspi1_clk. The macro converts it to an offset from the node address.
+  value - PIN_OUTPUT, PIN_OUTPUT_PULLUP, PIN_OUTPUT_PULLDOWN, PIN_INPUT,
+          PIN_INPUT_PULLUP or PIN_INPUT_PULLDOWN.
+  mux_mode - MUX_MODE_0 to MUX_MODE_7.
+
+  For example:
+
+    mcspi1_clk_default: mcspi1_clk_default {
+      pinmux = <OMAP3_PINMUX(0x21c8, PIN_INPUT, MUX_MODE_0)>;
+    };
+
+compatible: "ti,omap3-pinctrl"
+
+include: base.yaml
+
+properties:
+  reg:
+    required: true
+
+child-binding:
+  description: OMAP3 pad configuration
+
+  properties:
+    pinmux:
+      required: true
+      type: array
+      description: |
+        Pad register offset and configuration value, built with
+        OMAP3_PINMUX().

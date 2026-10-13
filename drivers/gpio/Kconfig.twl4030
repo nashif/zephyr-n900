@@ -1,0 +1,19 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+config GPIO_TWL4030
+	bool "TI TWL4030 GPIO controller"
+	default y
+	depends on DT_HAS_TI_TWL4030_GPIO_ENABLED
+	depends on MFD_TWL4030
+	help
+	  Enable the driver for the GPIO controller of the TI TWL4030 and
+	  TWL5030 power management chips.
+
+config GPIO_TWL4030_INIT_PRIORITY
+	int "TWL4030 GPIO initialization priority"
+	default 81
+	depends on GPIO_TWL4030
+	help
+	  Initialization priority of the TWL4030 GPIO controller, after the
+	  parent TWL4030 device.

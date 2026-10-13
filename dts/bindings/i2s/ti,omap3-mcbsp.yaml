@@ -1,0 +1,18 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  TI OMAP3 McBSP (multichannel buffered serial port) used as an I2S
+  transmitter. The port takes its bit and frame clocks from the codec.
+
+compatible: "ti,omap3-mcbsp"
+
+include: [i2s-controller.yaml, pinctrl-device.yaml]
+
+properties:
+  reg:
+    required: true
+
+  interrupts:
+    required: true
+    description: The port's common interrupt.

@@ -1,0 +1,18 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  GPIO controller of the TI TWL4030 and TWL5030 power management chips, a
+  child of the chip's ti,twl4030 node.
+
+compatible: "ti,twl4030-gpio"
+
+include: gpio-controller.yaml
+
+properties:
+  "#gpio-cells":
+    const: 2
+
+gpio-cells:
+  - pin
+  - flags

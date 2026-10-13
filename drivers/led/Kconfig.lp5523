@@ -1,0 +1,12 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+config LP5523
+	bool "LP5523 LED driver"
+	default y
+	depends on DT_HAS_NATIONAL_LP5523_ENABLED
+	select I2C
+	select GPIO if $(dt_compat_any_has_prop,$(DT_COMPAT_NATIONAL_LP5523),enable-gpios)
+	help
+	  Enable the driver for the TI (National Semiconductor) LP5523
+	  9-channel I2C LED driver.

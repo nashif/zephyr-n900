@@ -1,0 +1,12 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+config TI_OMAP3_DISPC
+	bool "TI OMAP3 display controller"
+	default y
+	depends on DT_HAS_TI_OMAP3_DISPC_ENABLED
+	select DISPLAY_FRAMEBUFFER
+	help
+	  Display driver for the graphics layer of the TI OMAP3 display
+	  controller, scanning out a reserved framebuffer in XRGB8888. The
+	  panel and LCD output must already be configured by the bootloader.

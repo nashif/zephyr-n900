@@ -1,0 +1,47 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  Analog Devices ADP1653 camera flash LED driver
+
+  LED 0 of the LED API is the high-power LED in torch mode and LED 1 the
+  indicator LED. Setting LED 2 to any non-zero brightness fires one flash of
+  the high-power LED at flash-max-microamp, which the chip ends after
+  flash-timeout-us; LEDs 0 and 1 return -EBUSY until then.
+
+compatible: "adi,adp1653"
+
+include: i2c-device.yaml
+
+properties:
+  enable-gpios:
+    type: phandle-array
+    description: GPIO driving the EN pin. The chip is enabled while the line is active.
+
+  torch-max-microamp:
+    type: int
+    required: true
+    description: |
+      High-power LED current at full torch brightness, in microamperes, from
+      50000 to 200000 in steps of 15000.
+
+  flash-max-microamp:
+    type: int
+    required: true
+    description: |
+      High-power LED current of a flash, in microamperes, from 50000 to 500000
+      in steps of 15000.
+
+  flash-timeout-us:
+    type: int
+    default: 500000
+    description: |
+      Flash duration in microseconds, at most 820000, rounded down to a step of
+      54600.
+
+  indicator-max-microamp:
+    type: int
+    default: 0
+    description: |
+      Indicator LED current at full brightness, in microamperes, up to 17500
+      in steps of 2500. The default leaves the indicator off.

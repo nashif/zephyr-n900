@@ -1,0 +1,12 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+config CHARGER_BQ2415X
+	bool "BQ2415x battery charger"
+	default y
+	depends on DT_HAS_TI_BQ24150A_ENABLED
+	select I2C
+	help
+	  Enable the I2C driver for the TI BQ24150A battery charger. The driver
+	  resets the charger's 32 s safety timer periodically, which keeps the
+	  configured charge settings in effect.

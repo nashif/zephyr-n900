@@ -1,0 +1,12 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+config MFD_TWL4030
+	bool "TI TWL4030 power management chip"
+	default y
+	depends on DT_HAS_TI_TWL4030_ENABLED
+	select I2C
+	help
+	  Enable the driver for the TI TWL4030 and TWL5030 power management
+	  chips: register access for the drivers of their modules and the
+	  dispatch of the chip's interrupt line.

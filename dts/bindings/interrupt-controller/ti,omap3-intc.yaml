@@ -1,0 +1,24 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+description: TI OMAP3 interrupt controller (INTCPS)
+
+compatible: "ti,omap3-intc"
+
+include: [interrupt-controller.yaml, base.yaml]
+
+properties:
+  reg:
+    required: true
+
+  ti,intc-size:
+    type: int
+    required: true
+    description: Number of interrupt inputs.
+
+  "#interrupt-cells":
+    const: 2
+
+interrupt-cells:
+  - irq
+  - priority

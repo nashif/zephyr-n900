@@ -1,0 +1,11 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+config HAPTICS_TWL4030_VIBRA
+	bool "TI TWL4030 vibrator"
+	default y
+	depends on DT_HAS_TI_TWL4030_VIBRA_ENABLED
+	depends on MFD_TWL4030
+	help
+	  Enable the driver for the vibrator output of the TI TWL4030 and
+	  TWL5030 power management chips.

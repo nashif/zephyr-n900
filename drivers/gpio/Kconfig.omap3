@@ -1,0 +1,9 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+config GPIO_OMAP3
+	bool "TI OMAP3 GPIO driver"
+	default y
+	depends on DT_HAS_TI_OMAP3_GPIO_ENABLED
+	help
+	  Enable the driver for the GPIO banks of TI OMAP3 SoCs.

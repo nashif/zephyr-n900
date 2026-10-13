@@ -1,0 +1,13 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+config INPUT_TSC2005
+	bool "TI TSC2005 touchscreen controller driver"
+	default y
+	depends on DT_HAS_TI_TSC2005_ENABLED
+	select SPI
+	select GPIO
+	select INPUT_TOUCH
+	help
+	  Enable the driver for the TI TSC2005 resistive touchscreen
+	  controller.

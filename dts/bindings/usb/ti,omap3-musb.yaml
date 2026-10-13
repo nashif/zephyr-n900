@@ -1,0 +1,22 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  TI OMAP3 high-speed USB OTG controller (Mentor Graphics MUSB), used as a
+  USB device controller with a ULPI PHY. The reset-gpios of the PHY in phys,
+  if any, take the PHY out of reset.
+
+compatible: "ti,omap3-musb"
+
+include: usb-ep.yaml
+
+properties:
+  reg:
+    required: true
+
+  interrupts:
+    required: true
+
+  phys:
+    type: phandle
+    description: ULPI PHY, with the usb-ulpi-phy compatible.

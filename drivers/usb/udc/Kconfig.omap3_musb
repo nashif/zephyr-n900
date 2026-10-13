@@ -1,0 +1,29 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+config UDC_OMAP3_MUSB
+	bool "TI OMAP3 MUSB USB device controller driver"
+	default y
+	depends on DT_HAS_TI_OMAP3_MUSB_ENABLED
+	select EVENTS
+	select UDC_DRIVER_HAS_HIGH_SPEED_SUPPORT
+	select GPIO if $(dt_compat_any_has_prop,$(DT_COMPAT_USB_ULPI_PHY),reset-gpios)
+	help
+	  Enable the driver for the high-speed USB OTG controller of the TI
+	  OMAP3 SoCs, in peripheral mode.
+
+if UDC_OMAP3_MUSB
+
+config UDC_OMAP3_MUSB_STACK_SIZE
+	int "Driver thread stack size"
+	default 1024
+	help
+	  Size of the stack of the driver thread.
+
+config UDC_OMAP3_MUSB_THREAD_PRIORITY
+	int "Driver thread priority"
+	default 8
+	help
+	  Cooperative priority of the driver thread.
+
+endif # UDC_OMAP3_MUSB

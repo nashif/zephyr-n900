@@ -1,0 +1,11 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+config INPUT_TWL4030_KEYPAD
+	bool "TI TWL4030 keypad"
+	default y
+	depends on DT_HAS_TI_TWL4030_KEYPAD_ENABLED
+	depends on MFD_TWL4030
+	help
+	  Enable the driver for the keypad module of the TI TWL4030 and
+	  TWL5030 power management chips.

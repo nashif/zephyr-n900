@@ -1,0 +1,40 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  TI BQ24150A I2C-controlled single-cell Li-ion battery charger.
+
+  The charge and termination currents are set through the external sense
+  resistor; the driver rounds each requested value down to a step the
+  charger implements.
+
+include: [battery.yaml, i2c-device.yaml]
+
+compatible: "ti,bq24150a"
+
+properties:
+  constant-charge-current-max-microamp:
+    required: true
+
+  constant-charge-voltage-max-microvolt:
+    required: true
+    description: Battery regulation voltage, 3.5 V to 4.44 V in 20 mV steps.
+
+  charge-term-current-microamp:
+    required: true
+
+  input-current-limit-microamp:
+    type: int
+    default: 100000
+    description: |
+      Input current limit: 100 mA, 500 mA, 800 mA, or no limit above 800 mA.
+
+  ti,weak-battery-microvolt:
+    type: int
+    default: 3400000
+    description: Weak battery threshold, 3.4 V to 3.7 V in 100 mV steps.
+
+  ti,sense-resistor-micro-ohms:
+    type: int
+    required: true
+    description: Value of the charge current sense resistor.

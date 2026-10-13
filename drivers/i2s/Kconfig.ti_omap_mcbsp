@@ -1,0 +1,19 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+config I2S_OMAP_MCBSP
+	bool "TI OMAP3 McBSP I2S driver"
+	default y
+	depends on DT_HAS_TI_OMAP3_MCBSP_ENABLED
+	select PINCTRL if $(dt_compat_any_has_prop,$(DT_COMPAT_TI_OMAP3_MCBSP),pinctrl-0)
+	help
+	  Enable the I2S driver for the McBSP serial ports of TI OMAP3 SoCs.
+	  The ports transmit in PCM format with the bit and frame clocks from
+	  the codec.
+
+config I2S_OMAP_MCBSP_TX_BLOCK_COUNT
+	int "TX queue length"
+	default 4
+	depends on I2S_OMAP_MCBSP
+	help
+	  Number of memory blocks the transmit queue holds.

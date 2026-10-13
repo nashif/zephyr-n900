@@ -1,0 +1,17 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+common:
+  build_only: true
+  tags: [n900, drivers]
+  platform_allow:
+    - native_sim
+  integration_platforms:
+    - native_sim
+tests:
+  n900.drivers.build_all:
+    extra_configs:
+      - CONFIG_LIS302DL_TRIGGER=n
+  n900.drivers.build_all.trigger:
+    extra_configs:
+      - CONFIG_LIS302DL_TRIGGER=y

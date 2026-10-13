@@ -1,0 +1,10 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+config PINCTRL_TI_OMAP3
+	bool "TI OMAP3 pinctrl driver"
+	default y
+	depends on DT_HAS_TI_OMAP3_PINCTRL_ENABLED
+	help
+	  Enable the pad configuration driver of the TI OMAP3 system control
+	  module.

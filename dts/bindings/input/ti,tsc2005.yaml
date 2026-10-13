@@ -1,0 +1,54 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  TI TSC2005 resistive touchscreen controller
+
+  Raw samples between min-x and max-x, and min-y and max-y, are scaled to
+  screen-width and screen-height, which are required.
+
+compatible: "ti,tsc2005"
+
+include: [spi-device.yaml, touchscreen-common.yaml]
+
+properties:
+  int-gpios:
+    type: phandle-array
+    required: true
+    description: |
+      PINTDAV output, active when a set of samples is available.
+
+  reset-gpios:
+    type: phandle-array
+    description: |
+      RESET input. The chip is held in reset while the line is active.
+
+  ti,x-plate-ohms:
+    type: int
+    default: 280
+    description: Resistance of the X plate, in ohms, used for the touch pressure.
+
+  min-x:
+    type: int
+    default: 0
+    description: Raw X sample at the left edge of the screen.
+
+  max-x:
+    type: int
+    default: 4095
+    description: Raw X sample at the right edge of the screen.
+
+  min-y:
+    type: int
+    default: 0
+    description: Raw Y sample at the top edge of the screen.
+
+  max-y:
+    type: int
+    default: 4095
+    description: Raw Y sample at the bottom edge of the screen.
+
+  max-pressure:
+    type: int
+    default: 2048
+    description: Samples with a higher touch resistance are discarded.

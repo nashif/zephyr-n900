@@ -1,0 +1,11 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+config TI_OMAP_INTC
+	bool "TI OMAP3 interrupt controller"
+	default y
+	depends on DT_HAS_TI_OMAP3_INTC_ENABLED
+	depends on ARM_CUSTOM_INTERRUPT_CONTROLLER
+	help
+	  Interrupt controller (INTCPS) of TI OMAP3 and AM335x SoCs, used as
+	  the custom interrupt controller of their Cortex-A8 core.

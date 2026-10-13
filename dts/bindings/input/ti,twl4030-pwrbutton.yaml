@@ -1,0 +1,10 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  Power button of the TI TWL4030 and TWL5030 power management chips, a
+  child of the chip's ti,twl4030 node. It reports INPUT_KEY_POWER.
+
+compatible: "ti,twl4030-pwrbutton"
+
+include: base.yaml

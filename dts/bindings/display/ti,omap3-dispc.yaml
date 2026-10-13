@@ -1,0 +1,28 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  TI OMAP3 display controller (DISPC).
+
+  The bootloader configures the panel and the LCD output; the graphics
+  layer scans out the framebuffer in the memory-region node.
+
+compatible: "ti,omap3-dispc"
+
+include: display-controller.yaml
+
+properties:
+  reg:
+    required: true
+
+  memory-region:
+    type: phandle
+    required: true
+    description: |
+      Memory reserved for the framebuffer of the graphics layer, outside
+      the RAM given to Zephyr.
+
+  display-controller:
+    type: phandle
+    description: |
+      Panel controller that the brightness requests are forwarded to.

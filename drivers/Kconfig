@@ -1,7 +1,75 @@
-# Copyright (c) 2021 Nordic Semiconductor ASA
+# Copyright The Zephyr Project Contributors
 # SPDX-License-Identifier: Apache-2.0
 
-menu "Drivers"
-rsource "blink/Kconfig"
-rsource "sensor/Kconfig"
+menu "Nokia N900 and TI OMAP3 drivers"
+
+if AUDIO_CODEC
+rsource "audio/Kconfig.tlv320aic3x"
+endif
+
+if CHARGER
+rsource "charger/Kconfig.bq2415x"
+endif
+
+if DISPLAY
+rsource "display/Kconfig.acx565akm"
+rsource "display/Kconfig.ti_omap3_dispc"
+endif
+
+if FUEL_GAUGE
+rsource "fuel_gauge/bq27200/Kconfig"
+endif
+
+if GPIO
+rsource "gpio/Kconfig.omap3"
+rsource "gpio/Kconfig.twl4030"
+endif
+
+if HAPTICS
+rsource "haptics/ti/Kconfig.twl4030_vibra"
+endif
+
+if HWINFO
+rsource "hwinfo/Kconfig.ti_omap3"
+endif
+
+if I2C
+rsource "i2c/Kconfig.omap3"
+endif
+
+if I2S
+rsource "i2s/Kconfig.ti_omap_mcbsp"
+endif
+
+if INPUT
+rsource "input/Kconfig.tsc2005"
+rsource "input/Kconfig.twl4030_keypad"
+rsource "input/Kconfig.twl4030_pwrbutton"
+endif
+
+rsource "interrupt_controller/Kconfig.ti_omap"
+
+if LED
+rsource "led/Kconfig.adp1653"
+rsource "led/Kconfig.lp5523"
+endif
+
+if MFD
+rsource "mfd/Kconfig.twl4030"
+endif
+
+if PINCTRL
+rsource "pinctrl/Kconfig.ti_omap3"
+endif
+
+if SENSOR
+rsource "sensor/st/lis302dl/Kconfig"
+endif
+
+rsource "timer/Kconfig.ti_omap_gptimer"
+
+if UDC_DRIVER
+rsource "usb/udc/Kconfig.omap3_musb"
+endif
+
 endmenu

@@ -1,0 +1,11 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+config TI_OMAP_GPTIMER
+	bool "TI OMAP3 general-purpose timer"
+	default y
+	depends on DT_HAS_TI_OMAP3430_TIMER_ENABLED
+	select TICKLESS_CAPABLE
+	help
+	  System timer driver for the general-purpose timers (GPTIMER) of TI
+	  OMAP3 SoCs.

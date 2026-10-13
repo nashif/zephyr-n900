@@ -1,0 +1,19 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  Vibrator output of the TI TWL4030 and TWL5030 power management chips, a
+  child of the chip's ti,twl4030 node. The audio block's PWM drives the
+  motor at a fixed duty cycle.
+
+compatible: "ti,twl4030-vibra"
+
+include: base.yaml
+
+properties:
+  duty-cycle-percent:
+    type: int
+    default: 100
+    description: |
+      Duty cycle of the motor drive in percent, 1 to 100. The default drives
+      the motor at full strength.

@@ -1,0 +1,10 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+config BQ27200
+	bool "BQ27200 fuel gauge"
+	default y
+	depends on DT_HAS_TI_BQ27200_ENABLED
+	select I2C
+	help
+	  Enable the I2C driver for the TI BQ27200 battery fuel gauge.

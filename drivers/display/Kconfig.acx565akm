@@ -1,0 +1,11 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+config ACX565AKM
+	bool "Sony ACX565AKM panel controller"
+	default y
+	depends on DT_HAS_SONY_ACX565AKM_ENABLED
+	select SPI
+	help
+	  Enable the driver for the command interface of the Sony ACX565AKM
+	  LCD panel controller: brightness and display on/off.

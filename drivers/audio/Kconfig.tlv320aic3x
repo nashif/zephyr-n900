@@ -1,0 +1,11 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+config AUDIO_TLV320AIC3X
+	bool "TI TLV320AIC3x audio codec"
+	default y
+	depends on DT_HAS_TI_TLV320AIC3X_ENABLED
+	select I2C
+	help
+	  Enable the driver for the TI TLV320AIC3x stereo audio codecs, such
+	  as the AIC33 and AIC34, for playback.

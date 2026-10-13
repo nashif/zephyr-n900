@@ -1,0 +1,11 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  TI TWL4030 and TWL5030 power management chips. The node's address is the
+  first of the four consecutive I2C addresses the chip answers at, and its
+  interrupt is the chip's INT1 line.
+
+compatible: "ti,twl4030"
+
+include: i2c-device.yaml

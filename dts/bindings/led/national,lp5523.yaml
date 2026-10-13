@@ -1,0 +1,24 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  TI (National Semiconductor) LP5523 9-channel LED driver
+
+  Channels 0 to 8 are LEDs 0 to 8 of the LED API.
+
+compatible: "national,lp5523"
+
+include: i2c-device.yaml
+
+properties:
+  enable-gpios:
+    type: phandle-array
+    description: |
+      GPIO driving the EN pin. The chip is enabled while the line is active.
+
+  current-microamp:
+    type: int
+    default: 17500
+    description: |
+      Output current of every channel at full brightness, in microamperes,
+      in steps of 100 uA up to 25500. The default is the reset value.

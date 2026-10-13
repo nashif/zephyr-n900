@@ -1,0 +1,25 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  TI TLV320AIC3x stereo audio codec, such as the AIC33 or one half of the
+  AIC34, on I2C. The PLL derives the codec clock from MCLK.
+
+compatible: "ti,tlv320aic3x"
+
+include: i2c-device.yaml
+
+properties:
+  reset-gpios:
+    type: phandle-array
+    description: Reset line of the codec.
+
+  hp-out:
+    type: boolean
+    description: |
+      Play through the high-power outputs: HPLOUT and HPROUT, with HPLCOM
+      and HPRCOM driven as their inverse for bridge-tied loads.
+
+  line-out:
+    type: boolean
+    description: Play through the line outputs LEFT_LOP/M and RIGHT_LOP/M.

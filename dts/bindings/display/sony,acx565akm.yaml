@@ -1,0 +1,13 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  Sony ACX565AKM LCD panel controller
+
+  Command interface on 3-wire SPI with 9-bit words. The pixels come from a
+  display controller over a separate video link; point that controller's
+  display-controller property at this node to control the brightness.
+
+compatible: "sony,acx565akm"
+
+include: spi-device.yaml

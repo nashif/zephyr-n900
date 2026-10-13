@@ -1,0 +1,37 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+description: STMicroelectronics LIS302DL 3-axis accelerometer
+
+compatible: "st,lis302dl"
+
+include: [sensor-device.yaml, i2c-device.yaml]
+
+properties:
+  full-scale:
+    type: int
+    default: 2
+    enum:
+      - 2
+      - 8
+    description: Full scale in g.
+
+  odr:
+    type: int
+    default: 100
+    enum:
+      - 100
+      - 400
+    description: Output data rate in Hz.
+
+  irq-gpios:
+    type: phandle-array
+    description: |
+      INT1 and INT2 lines, in that order. INT1 reports data ready and INT2
+      single clicks. The lines are active high.
+
+  click-threshold:
+    type: int
+    default: 3
+    description: |
+      Acceleration that counts as a click, in steps of 0.5 g, from 1 to 15.

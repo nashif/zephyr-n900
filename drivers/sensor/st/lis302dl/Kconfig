@@ -1,0 +1,21 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+config LIS302DL
+	bool "LIS302DL accelerometer"
+	default y
+	depends on DT_HAS_ST_LIS302DL_ENABLED
+	select I2C
+	help
+	  Enable the driver for the ST LIS302DL I2C 3-axis accelerometer.
+
+config LIS302DL_TRIGGER
+	bool "LIS302DL data ready and tap triggers"
+	default y
+	depends on LIS302DL
+	depends on $(dt_compat_any_has_prop,$(DT_COMPAT_ST_LIS302DL),irq-gpios)
+	select GPIO
+	help
+	  Report data ready on the INT1 line and single clicks on the INT2
+	  line of the irq-gpios property. The handlers run in the system
+	  work queue.

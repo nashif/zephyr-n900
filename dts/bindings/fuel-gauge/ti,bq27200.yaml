@@ -1,0 +1,16 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+description: TI BQ27200 single-cell battery fuel gauge
+
+compatible: "ti,bq27200"
+
+include: [i2c-device.yaml, fuel-gauge.yaml]
+
+properties:
+  ti,sense-resistor-micro-ohms:
+    type: int
+    default: 20000
+    description: |
+      Value of the current sense resistor, from which the gauge's current
+      and capacity readings are scaled.

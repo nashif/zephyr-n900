@@ -1,0 +1,31 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  Keypad module of the TI TWL4030 and TWL5030 power management chips, a
+  child of the chip's ti,twl4030 node.
+
+  The driver reports row and column events; an input-keymap child node maps
+  them to key codes. A row whose inputs all read pressed is reported as one
+  extra column, col-size. Key changes are read on the chip's interrupt, or
+  polled when the parent has no interrupt.
+
+compatible: "ti,twl4030-keypad"
+
+include: base.yaml
+
+properties:
+  row-size:
+    type: int
+    required: true
+    description: Number of matrix rows, up to 8.
+
+  col-size:
+    type: int
+    required: true
+    description: Number of matrix columns, up to 8.
+
+  poll-period-ms:
+    type: int
+    default: 20
+    description: Interval between reads of the matrix state when polled.
