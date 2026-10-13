@@ -1,0 +1,12 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+common:
+  build_only: true
+  platform_allow:
+    - n900
+  integration_platforms:
+    - n900
+tests:
+  n900.bringup.resetdiag:
+    tags: [n900, bringup]

@@ -1,0 +1,5 @@
+config APP_REBOOT_AFTER_S
+	int "Reboot after this many seconds, 0 to run forever"
+	default 0
+
+source "Kconfig.zephyr"

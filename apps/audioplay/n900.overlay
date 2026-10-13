@@ -1,0 +1,5 @@
+/ {
+	zephyr,user {
+		speaker-amp-gpios = <&twl_gpio 7 GPIO_ACTIVE_HIGH>;
+	};
+};
