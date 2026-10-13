@@ -1,0 +1,22 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+config SOC_FAMILY_TI_OMAP
+	bool
+
+config SOC_SERIES_OMAP3
+	bool
+	select SOC_FAMILY_TI_OMAP
+
+config SOC_OMAP3430
+	bool
+	select SOC_SERIES_OMAP3
+
+config SOC_FAMILY
+	default "ti_omap" if SOC_FAMILY_TI_OMAP
+
+config SOC_SERIES
+	default "omap3" if SOC_SERIES_OMAP3
+
+config SOC
+	default "omap3430" if SOC_OMAP3430

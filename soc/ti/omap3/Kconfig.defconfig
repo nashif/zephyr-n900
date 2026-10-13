@@ -1,0 +1,12 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+if SOC_SERIES_OMAP3
+
+config NUM_IRQS
+	default 96
+
+config SYS_CLOCK_HW_CYCLES_PER_SEC
+	default $(dt_nodelabel_int_prop,gptimer1,clock-frequency)
+
+endif # SOC_SERIES_OMAP3

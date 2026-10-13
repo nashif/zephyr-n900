@@ -1,0 +1,275 @@
+/*
+ * Copyright The Zephyr Project Contributors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <mem.h>
+#include <freq.h>
+
+#include <arm/armv7-a.dtsi>
+#include <zephyr/dt-bindings/i2c/i2c.h>
+
+/ {
+	interrupt-parent = <&intc>;
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		cpu0: cpu@0 {
+			compatible = "arm,cortex-a8";
+			device_type = "cpu";
+			reg = <0>;
+		};
+	};
+
+	soc {
+		compatible = "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+
+		intc: interrupt-controller@48200000 {
+			compatible = "ti,omap3-intc";
+			reg = <0x48200000 0x1000>;
+			interrupt-controller;
+			#interrupt-cells = <2>;
+			ti,intc-size = <96>;
+		};
+
+		pinctrl: pinctrl@48002030 {
+			compatible = "ti,omap3-pinctrl";
+			reg = <0x48002030 0x238>;
+		};
+
+		dispc: display-controller@48050400 {
+			compatible = "ti,omap3-dispc";
+			reg = <0x48050400 0x400>;
+			interrupts = <25 0>;
+			status = "disabled";
+		};
+
+		gptimer1: timer@48318000 {
+			compatible = "ti,omap3430-timer";
+			reg = <0x48318000 0x1000>;
+			interrupts = <37 0>;
+		};
+
+		gpio1: gpio@48310000 {
+			compatible = "ti,omap3-gpio";
+			reg = <0x48310000 0x1000>;
+			interrupts = <29 0>;
+			gpio-controller;
+			#gpio-cells = <2>;
+			ngpios = <32>;
+			status = "disabled";
+		};
+
+		gpio2: gpio@49050000 {
+			compatible = "ti,omap3-gpio";
+			reg = <0x49050000 0x1000>;
+			interrupts = <30 0>;
+			gpio-controller;
+			#gpio-cells = <2>;
+			ngpios = <32>;
+			status = "disabled";
+		};
+
+		gpio3: gpio@49052000 {
+			compatible = "ti,omap3-gpio";
+			reg = <0x49052000 0x1000>;
+			interrupts = <31 0>;
+			gpio-controller;
+			#gpio-cells = <2>;
+			ngpios = <32>;
+			status = "disabled";
+		};
+
+		gpio4: gpio@49054000 {
+			compatible = "ti,omap3-gpio";
+			reg = <0x49054000 0x1000>;
+			interrupts = <32 0>;
+			gpio-controller;
+			#gpio-cells = <2>;
+			ngpios = <32>;
+			status = "disabled";
+		};
+
+		gpio5: gpio@49056000 {
+			compatible = "ti,omap3-gpio";
+			reg = <0x49056000 0x1000>;
+			interrupts = <33 0>;
+			gpio-controller;
+			#gpio-cells = <2>;
+			ngpios = <32>;
+			status = "disabled";
+		};
+
+		gpio6: gpio@49058000 {
+			compatible = "ti,omap3-gpio";
+			reg = <0x49058000 0x1000>;
+			interrupts = <34 0>;
+			gpio-controller;
+			#gpio-cells = <2>;
+			ngpios = <32>;
+			status = "disabled";
+		};
+
+		i2c1: i2c@48070000 {
+			compatible = "ti,omap3-i2c";
+			reg = <0x48070000 0x1000>;
+			interrupts = <56 0>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			clock-frequency = <I2C_BITRATE_STANDARD>;
+			status = "disabled";
+		};
+
+		i2c2: i2c@48072000 {
+			compatible = "ti,omap3-i2c";
+			reg = <0x48072000 0x1000>;
+			interrupts = <57 0>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			clock-frequency = <I2C_BITRATE_STANDARD>;
+			status = "disabled";
+		};
+
+		i2c3: i2c@48060000 {
+			compatible = "ti,omap3-i2c";
+			reg = <0x48060000 0x1000>;
+			interrupts = <61 0>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			clock-frequency = <I2C_BITRATE_STANDARD>;
+			status = "disabled";
+		};
+
+		mcspi1: spi@48098000 {
+			compatible = "ti,omap2-mcspi";
+			reg = <0x48098000 0x1000>;
+			interrupts = <65 0>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			clock-frequency = <DT_FREQ_M(48)>;
+			ti,spi-num-cs = <4>;
+			status = "disabled";
+		};
+
+		mcspi2: spi@4809a000 {
+			compatible = "ti,omap2-mcspi";
+			reg = <0x4809a000 0x1000>;
+			interrupts = <66 0>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			clock-frequency = <DT_FREQ_M(48)>;
+			ti,spi-num-cs = <2>;
+			status = "disabled";
+		};
+
+		mcspi3: spi@480b8000 {
+			compatible = "ti,omap2-mcspi";
+			reg = <0x480b8000 0x1000>;
+			interrupts = <91 0>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			clock-frequency = <DT_FREQ_M(48)>;
+			ti,spi-num-cs = <2>;
+			status = "disabled";
+		};
+
+		mcspi4: spi@480ba000 {
+			compatible = "ti,omap2-mcspi";
+			reg = <0x480ba000 0x1000>;
+			interrupts = <48 0>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			clock-frequency = <DT_FREQ_M(48)>;
+			ti,spi-num-cs = <1>;
+			status = "disabled";
+		};
+
+		usb_otg: usb@480ab000 {
+			compatible = "ti,omap3-musb";
+			reg = <0x480ab000 0x1000>;
+			interrupts = <92 0>;
+			num-bidir-endpoints = <16>;
+			status = "disabled";
+		};
+
+		mcbsp1: i2s@48074000 {
+			compatible = "ti,omap3-mcbsp";
+			reg = <0x48074000 0x100>;
+			interrupts = <16 0>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			status = "disabled";
+		};
+
+		mcbsp2: i2s@49022000 {
+			compatible = "ti,omap3-mcbsp";
+			reg = <0x49022000 0x100>;
+			interrupts = <17 0>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			status = "disabled";
+		};
+
+		mcbsp3: i2s@49024000 {
+			compatible = "ti,omap3-mcbsp";
+			reg = <0x49024000 0x100>;
+			interrupts = <22 0>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			status = "disabled";
+		};
+
+		mcbsp4: i2s@49026000 {
+			compatible = "ti,omap3-mcbsp";
+			reg = <0x49026000 0x100>;
+			interrupts = <23 0>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			status = "disabled";
+		};
+
+		mcbsp5: i2s@48096000 {
+			compatible = "ti,omap3-mcbsp";
+			reg = <0x48096000 0x100>;
+			interrupts = <27 0>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			status = "disabled";
+		};
+
+		uart1: serial@4806a000 {
+			compatible = "ns16550";
+			reg = <0x4806a000 0x1000>;
+			reg-shift = <2>;
+			interrupts = <72 0>;
+			clock-frequency = <DT_FREQ_M(48)>;
+			status = "disabled";
+		};
+
+		uart2: serial@4806c000 {
+			compatible = "ns16550";
+			reg = <0x4806c000 0x1000>;
+			reg-shift = <2>;
+			interrupts = <73 0>;
+			clock-frequency = <DT_FREQ_M(48)>;
+			status = "disabled";
+		};
+
+		uart3: serial@49020000 {
+			compatible = "ns16550";
+			reg = <0x49020000 0x1000>;
+			reg-shift = <2>;
+			interrupts = <74 0>;
+			clock-frequency = <DT_FREQ_M(48)>;
+			status = "disabled";
+		};
+	};
+};

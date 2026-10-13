@@ -1,0 +1,38 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+config SOC_SERIES_OMAP3
+	select ARM
+	select CPU_CORTEX_A8
+	select VFP_DP_D32
+	select NEON
+	select ARM_CUSTOM_INTERRUPT_CONTROLLER
+	select SOC_RESET_HOOK
+	select SOC_EARLY_INIT_HOOK
+	select SYS_CLOCK_EXISTS
+
+if SOC_SERIES_OMAP3
+
+config SOC_OMAP3_DSS_CONSOLE
+	bool "Console on the display"
+	default y
+	depends on CONSOLE
+	depends on $(dt_nodelabel_has_prop,dispc,memory-region)
+	depends on !TI_OMAP3_DISPC
+	select CHARACTER_FRAMEBUFFER
+	help
+	  Draw printk() and stdout output on the LCD. The console takes over
+	  the graphics layer that the bootloader configured, keeping its
+	  timing and resolution, and scans out an RGB16 framebuffer in the
+	  memory region of the display controller node. It is not available
+	  while the display driver owns the graphics layer.
+
+config SOC_OMAP3_BOOT_STAGES
+	bool "Show boot progress on the display"
+	select SOC_PREP_HOOK
+	help
+	  Paint a colored band into the bootloader's framebuffer at each early
+	  boot stage, and a solid screen color once the MMU is on, to locate
+	  boot failures without a serial port.
+
+endif # SOC_SERIES_OMAP3
