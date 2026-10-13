@@ -1,0 +1,32 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+if BOARD_N900
+
+# Charging and the power management chip are on I2C
+config I2C
+	default y
+
+config MFD
+	default y
+
+config CHARGER
+	default y
+
+config FUEL_GAUGE
+	default y
+
+# Holding the power button reboots into NOLO
+config REBOOT
+	default y
+
+if LVGL
+
+# The display controller scans out XRGB8888
+choice LV_Z_COLOR_FORMAT
+	default LV_Z_COLOR_FORMAT_XRGB8888
+endchoice
+
+endif # LVGL
+
+endif # BOARD_N900

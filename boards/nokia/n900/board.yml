@@ -1,0 +1,9 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+board:
+  name: n900
+  full_name: N900
+  vendor: nokia
+  socs:
+  - name: omap3430

@@ -1,0 +1,11 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+identifier: n900
+name: Nokia N900
+type: mcu
+arch: arm
+toolchain:
+  - zephyr
+ram: 262144
+vendor: nokia

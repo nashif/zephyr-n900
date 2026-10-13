@@ -1,0 +1,48 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+config BOARD_N900
+	select BOARD_LATE_INIT_HOOK
+
+if BOARD_N900
+
+config BOARD_N900_CHARGE_TEMP_GUARD
+	bool "Charge only within the battery temperature window"
+	default y
+	depends on CHARGER && FUEL_GAUGE
+	help
+	  Read the battery temperature from the fuel gauge every 10 s and
+	  disable charging outside the configured window, or when the
+	  temperature cannot be read.
+
+if BOARD_N900_CHARGE_TEMP_GUARD
+
+config BOARD_N900_CHARGE_TEMP_MIN
+	int "Lowest battery temperature for charging, in degrees Celsius"
+	default 0
+
+config BOARD_N900_CHARGE_TEMP_MAX
+	int "Highest battery temperature for charging, in degrees Celsius"
+	default 45
+
+config BOARD_N900_CHARGE_TEMP_HYSTERESIS
+	int "Margin inside the window before charging resumes, in degrees Celsius"
+	default 3
+
+endif # BOARD_N900_CHARGE_TEMP_GUARD
+
+config BOARD_N900_POWER_KEY_REBOOT
+	bool "Reboot when the power button is held"
+	default y
+	depends on MFD_TWL4030 && REBOOT
+	help
+	  Restart the phone with sys_reboot() when the power button is held
+	  for BOARD_N900_POWER_KEY_REBOOT_HOLD_MS, which returns to NOLO to
+	  load the next image. Shorter presses are left to the application.
+
+config BOARD_N900_POWER_KEY_REBOOT_HOLD_MS
+	int "Power button hold time before rebooting, in milliseconds"
+	default 2000
+	depends on BOARD_N900_POWER_KEY_REBOOT
+
+endif # BOARD_N900
