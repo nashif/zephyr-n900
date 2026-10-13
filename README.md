@@ -1,138 +1,60 @@
-# Zephyr Example Application
+# Zephyr on the Nokia N900
 
-<a href="https://github.com/zephyrproject-rtos/example-application/actions/workflows/build.yml?query=branch%3Amain">
-  <img src="https://github.com/zephyrproject-rtos/example-application/actions/workflows/build.yml/badge.svg?event=push">
-</a>
-<a href="https://github.com/zephyrproject-rtos/example-application/actions/workflows/docs.yml?query=branch%3Amain">
-  <img src="https://github.com/zephyrproject-rtos/example-application/actions/workflows/docs.yml/badge.svg?event=push">
-</a>
-<a href="https://zephyrproject-rtos.github.io/example-application">
-  <img alt="Documentation" src="https://img.shields.io/badge/documentation-3D578C?logo=sphinx&logoColor=white">
-</a>
-<a href="https://zephyrproject-rtos.github.io/example-application/doxygen">
-  <img alt="API Documentation" src="https://img.shields.io/badge/API-documentation-3D578C?logo=c&logoColor=white">
-</a>
+A Zephyr module with everything needed to run Zephyr on the Nokia N900
+(RX-51, TI OMAP3430, Arm Cortex-A8), kept outside the Zephyr tree:
 
-This repository contains a Zephyr example application. The main purpose of this
-repository is to serve as a reference on how to structure Zephyr-based
-applications. Some of the features demonstrated in this example are:
+- `soc/ti/omap3`: the OMAP3 SoC series (entry stub, clocks, MMU regions,
+  display console, boot stage markers)
+- `boards/nokia/n900`: the board
+- `dts/`: the OMAP3430 devicetree and the bindings of all drivers below
+- `drivers/`: interrupt controller, GPTIMER system timer, I2C, GPIO,
+  pinctrl, display controller and panel, TWL4030 (MFD, keypad, power
+  button, GPIO, vibrator), BQ24150A charger, BQ27200 fuel gauge, TSC2005
+  touchscreen, LIS302DL accelerometer, LP5523 and ADP1653 LED drivers,
+  MUSB USB device controller, hwinfo, McBSP I2S and TLV320AIC3x codec
+- `scripts/runners/nolo.py`: a west runner loading images over USB into
+  RAM through the NOLO bootloader with `0xFFFF`
+- `apps/`: the phone demo, the camera preview, audio playback, and the
+  bring-up diagnostics in `apps/bringup/`
+- `tests/`: a build test of the drivers on `native_sim`
+- `tools/`: the bare-metal smoke test and the host scripts used during
+  bring-up
 
-- Basic [Zephyr application][app_dev] skeleton
-- [Zephyr workspace applications][workspace_app]
-- [Zephyr modules][modules]
-- [West T2 topology][west_t2]
-- [Custom boards][board_porting]
-- Custom [devicetree bindings][bindings]
-- Out-of-tree [drivers][drivers]
-- Out-of-tree libraries
-- Example CI configuration (using GitHub Actions)
-- Custom [west extension][west_ext]
-- Custom [Zephyr runner][runner_ext]
-- Doxygen and Sphinx documentation boilerplate
+A few changes to existing Zephyr code have no out-of-tree equivalent and
+live on the `topic/n900/core` branch of Zephyr, which `west.yml` points at:
+Cortex-A8 CPU support, two Armv7 MMU fixes, the `-mfpu` mapping, McSPI and
+TSL2561 driver changes, input switch events and LVGL software rotation.
 
-This repository is versioned together with the [Zephyr main tree][zephyr]. This
-means that every time that Zephyr is tagged, this repository is tagged as well
-with the same version number, and the [manifest](west.yml) entry for `zephyr`
-will point to the corresponding Zephyr tag. For example, the `example-application`
-v2.6.0 will point to Zephyr v2.6.0. Note that the `main` branch always
-points to the development branch of Zephyr, also `main`.
+## Getting started
 
-[app_dev]: https://docs.zephyrproject.org/latest/develop/application/index.html
-[workspace_app]: https://docs.zephyrproject.org/latest/develop/application/index.html#zephyr-workspace-app
-[modules]: https://docs.zephyrproject.org/latest/develop/modules.html
-[west_t2]: https://docs.zephyrproject.org/latest/develop/west/workspaces.html#west-t2
-[board_porting]: https://docs.zephyrproject.org/latest/guides/porting/board_porting.html
-[bindings]: https://docs.zephyrproject.org/latest/guides/dts/bindings.html
-[drivers]: https://docs.zephyrproject.org/latest/reference/drivers/index.html
-[zephyr]: https://github.com/zephyrproject-rtos/zephyr
-[west_ext]: https://docs.zephyrproject.org/latest/develop/west/extensions.html
-[runner_ext]: https://docs.zephyrproject.org/latest/develop/modules.html#external-runners
-
-## Getting Started
-
-Before getting started, make sure you have a proper Zephyr development
-environment. Follow the official
-[Zephyr Getting Started Guide](https://docs.zephyrproject.org/latest/develop/getting_started/index.html).
-
-### Initialization
-
-The first step is to initialize the workspace folder (``my-workspace``) where
-the ``example-application`` and all Zephyr modules will be cloned. Run the following
-command:
-
-```shell
-# initialize my-workspace for the example-application (main branch)
-west init -m https://github.com/zephyrproject-rtos/example-application --mr main my-workspace
-# update Zephyr modules
-cd my-workspace
+```sh
+west init -m https://github.com/nashif/zephyr-n900 --mr main n900-workspace
+cd n900-workspace
 west update
-```
-
-### Building and running
-
-To build the application, run the following command:
-
-```shell
-cd example-application
-west build -b $BOARD app
-```
-
-where `$BOARD` is the target board.
-
-You can use the `custom_plank` board found in this
-repository. Note that Zephyr sample boards may be used if an
-appropriate overlay is provided (see `app/boards`).
-
-A sample debug configuration is also provided. To apply it, run the following
-command:
-
-```shell
-west build -b $BOARD app -- -DEXTRA_CONF_FILE=debug.conf
-```
-
-Once you have built the application, run the following command to flash it:
-
-```shell
+west build -b n900 zephyr-n900/apps/phone
 west flash
 ```
 
-### Testing
+To build against an existing Zephyr checkout instead, point Zephyr at the
+module:
 
-To execute Twister integration tests, run the following command:
-
-```shell
-west twister -T tests --integration
+```sh
+export ZEPHYR_EXTRA_MODULES=/path/to/zephyr-n900
+west build -b n900 /path/to/zephyr-n900/apps/audioplay
 ```
 
-### Documentation
+The phone and camera apps generate the camera sensor register tables at
+build time from a local Linux tree (`-DLINUX_DIR=...`, default `~/linux`);
+those tables are GPL-2.0 and are not part of this repository.
 
-A minimal documentation setup is provided for Doxygen and Sphinx. To build the
-documentation first change to the ``doc`` folder:
+`west flash` needs `0xFFFF` and the phone in NOLO's USB mode;
+`scripts/autoload.sh` waits for NOLO and loads an image whenever the phone
+reboots.
 
-```shell
-cd doc
+## Tests
+
+```sh
+west twister -T apps -p n900 --exclude-tag needs-linux
+west twister -T tests -p native_sim
+ZEPHYR_BASE=/path/to/zephyr pytest scripts/tests
 ```
-
-Before continuing, check if you have Doxygen installed. It is recommended to
-use the same Doxygen version used in [CI](.github/workflows/docs.yml). To
-install Sphinx, make sure you have a Python installation in place and run:
-
-```shell
-pip install -r requirements.txt
-```
-
-API documentation (Doxygen) can be built using the following command:
-
-```shell
-doxygen
-```
-
-The output will be stored in the ``_build_doxygen`` folder. Similarly, the
-Sphinx documentation (HTML) can be built using the following command:
-
-```shell
-make html
-```
-
-The output will be stored in the ``_build_sphinx`` folder. You may check for
-other output formats other than HTML by running ``make help``.
