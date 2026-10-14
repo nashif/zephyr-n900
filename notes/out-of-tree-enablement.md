@@ -1,8 +1,5 @@
 # Notes: hardware enablement in your own repository
 
-Working notes for a blog post on maintaining the Nokia N900 port outside
-the Zephyr tree, using Zephyr's out-of-tree features. Goal: find the gaps.
-
 ## Starting point
 
 - `topic/n900/bringup` in zephyr: 57 commits off upstream/main, written as
